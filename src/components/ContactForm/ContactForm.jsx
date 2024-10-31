@@ -3,11 +3,13 @@ import * as Yup from "yup";
 import { Formik, Form, Field } from "formik";
 import { ErrorMessage } from "formik";
 import css from "./ContactForm.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import { addContact } from "../../redux/opertions";
+import { selectContacts } from "../../redux/contactsSlice";
 const ContactForm = () => {
   const dispatch = useDispatch();
+  const contact = useSelector(selectContacts);
   const FormValidate = Yup.object().shape({
     name: Yup.string()
       .min(3, "Too short!")

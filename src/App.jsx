@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import ContactForm from "./components/ContactForm/ContactForm";
 import SearchBox from "./components/SearchBox/SearchBox";
 import ContactList from "./components/ContactList/ContactList";
@@ -6,59 +5,22 @@ import "./App.css";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { changeFilter, selectNameFilter } from "./redux/filtersSlice";
-import {
-  addContact,
-  deleteContact,
-  selectContacts,
-} from "./redux/contactsSlice";
+import { selectContacts } from "./redux/contactsSlice";
 import { useEffect } from "react";
 import { fetchContacts } from "./redux/opertions";
 function App() {
-  // get items, isLoading, error
+  const dispatch = useDispatch();
   const items = useSelector(selectContacts);
+  const filter = useSelector(selectNameFilter);
   const isLoading = useSelector((state) => state.contactsData.isLoading);
   const error = useSelector((state) => state.contactsData.error);
-
-  // get filter
-  const filter = useSelector(selectNameFilter);
-  // send data
-  const dispatch = useDispatch();
-
-  // get contacts from MockAPi
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  // add contacts
-  const addNewContact = (newContact) => {
-    const finalContact = {
-      ...newContact,
-      id: nanoid(),
-    };
-
-    const action = addContact(finalContact);
-    dispatch(action);
-  };
-
-  // delete contacts
-  const onDeleteContact = (ContactId) => {
-    const updatedContacts = items.filter((item) => item.id !== ContactId);
-    console.log(updatedContacts);
-    const action = deleteContact(ContactId);
-    dispatch(action);
-  };
-
-  // filter contacts
-  const filterContacts = Array.isArray(items)
-    ? items.filter((item) =>
-        item.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    : [];
-  // set filter
   const handleFilterChange = (newFilter) => {
-    const action = changeFilter(newFilter);
-    dispatch(action);
+    dispatch(changeFilter(newFilter));
   };
 
   return (
@@ -68,10 +30,10 @@ function App() {
         Phonebook
       </h1>
       <ContactForm />
-      <SearchBox />
+      <SearchBox onFilterChange={handleFilterChange} />
       {isLoading && !error && <b>Request in progress...</b>}
       {error && <b>Something wrong</b>}
-      <ContactList />
+      <ContactList contacts={items} />
     </div>
   );
 }

@@ -1,14 +1,14 @@
 import ContactForm from "./components/ContactForm/ContactForm";
 import SearchBox from "./components/SearchBox/SearchBox";
 import ContactList from "./components/ContactList/ContactList";
-import "./App.css";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { changeFilter } from "./redux/filtersSlice";
 import { useEffect } from "react";
-import { fetchContacts } from "./redux/opertions";
+import { fetchContacts } from "./redux/contactsOps";
 import { selectError, selectIsLoading } from "./redux/selectors";
 import { selectContacts } from "./redux/contactsSlice";
+import "./App.css";
 function App() {
   const dispatch = useDispatch();
   const items = useSelector(selectContacts);

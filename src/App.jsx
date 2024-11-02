@@ -4,16 +4,16 @@ import ContactList from "./components/ContactList/ContactList";
 import "./App.css";
 import { HiDevicePhoneMobile } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
-import { changeFilter, selectNameFilter } from "./redux/filtersSlice";
-import { selectContacts } from "./redux/contactsSlice";
+import { changeFilter } from "./redux/filtersSlice";
 import { useEffect } from "react";
 import { fetchContacts } from "./redux/opertions";
+import { selectError, selectIsLoading } from "./redux/selectors";
+import { selectContacts } from "./redux/contactsSlice";
 function App() {
   const dispatch = useDispatch();
   const items = useSelector(selectContacts);
-  const filter = useSelector(selectNameFilter);
-  const isLoading = useSelector((state) => state.contactsData.isLoading);
-  const error = useSelector((state) => state.contactsData.error);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchContacts());

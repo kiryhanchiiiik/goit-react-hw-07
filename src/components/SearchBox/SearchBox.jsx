@@ -2,11 +2,11 @@ import { FaUsersViewfinder } from "react-icons/fa6";
 import css from "./SearchBox.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { changeFilter } from "../../redux/filtersSlice";
-import { selectFilteredContacts } from "../../redux/contactsSlice";
+import { selectNameFilter } from "../../redux/contactsSlice";
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(selectFilteredContacts);
+  const filter = useSelector(selectNameFilter);
 
   const handleChange = (e) => {
     dispatch(changeFilter(e.target.value));

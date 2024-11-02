@@ -60,9 +60,9 @@ const contactsSlice = createSlice({
 export const selectFilteredContacts = createSelector(
   [selectNameFilter, selectContacts],
   (filter, contacts) => {
-    contacts
+    return Array.isArray(contacts)
       ? contacts.filter((contact) =>
-          contact.name.toLowerCase().includes(filter.toLowerCase())
+          contact.name.toLowerCase().includes(filter.toLowerCase().trim())
         )
       : [];
   }
